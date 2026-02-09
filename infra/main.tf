@@ -91,8 +91,9 @@ resource "google_secret_manager_secret_version" "gmail_app_password" {
 # ── Cloud Run Job ──────────────────────────────────────────────────
 
 resource "google_cloud_run_v2_job" "scraper" {
-  name     = local.job_name
-  location = var.region
+  name                = local.job_name
+  location            = var.region
+  deletion_protection = false
 
   template {
     task_count = 1

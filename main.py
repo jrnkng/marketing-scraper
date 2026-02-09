@@ -1,8 +1,13 @@
 from __future__ import annotations
 
+import argparse
 import logging
 import time
 from typing import Dict, List, Optional
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 import requests
 
@@ -95,12 +100,12 @@ def fetch_posts_from_subreddit(
     return out
 
 
-def run_once() -> None:
+def run_once(minutes: int = 180) -> None:
     """Run a single scrape cycle across all subreddits."""
     for subreddit in subreddits:
         try:
             print(f"Fetching posts from {subreddit}...")
-            posts = fetch_posts_from_subreddit(subreddit, minutes=120, pages_to_scan=2)
+            posts = fetch_posts_from_subreddit(subreddit, minutes=minutes, pages_to_scan=2)
 
             for post in posts:
                 print("===")
@@ -128,16 +133,19 @@ def run_once() -> None:
                             subreddit=subreddit,
                         )
                         logging.info(f"Sent email for post ID {post['id']}")
-            time.sleep(10)
+            time.sleep(3)
         except Exception:
             logging.exception(f"Failed to process {subreddit}")
             continue
 
 
 def main() -> int:
-    """Run a single scrape cycle (designed for Cloud Run Job)."""
-    print("Starting scrape cycle...")
-    run_once()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--minutes", type=int, default=180, help="Look back window in minutes (default: 180)")
+    args = parser.parse_args()
+
+    print(f"Starting scrape cycle (last {args.minutes} min)...")
+    run_once(minutes=args.minutes)
     print("Scrape cycle complete.")
     return 0
 

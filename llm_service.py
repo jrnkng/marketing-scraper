@@ -39,7 +39,8 @@ def classify_answer_required_post(title, post_content):
             Post: 'I am looking to do a Mediterranean backpacking trip soon for about 15 days. I want to start in Lisbon, Barcelona, Marseille, Cinque Terre. Any tips?' -> NO (this post is about backpacking through cities, not hiking)
             Post: 'What sort of meals do people tend to cook up during a full/multi day hike? An onion, potato, and legumes/beans/meat stews nicely in a mess tin but surely there's some food tips I'm missing from experienced hikers. ' -> NO (about food only)
 
-            Be strict about which posts would benefit from a response. A post should only get a YES if the user would likely benefit from learning about my interactive planner tool.
+            Be strict about which posts would benefit from a response. A post should only get a YES if the user would likely benefit from learning about my interactive HIKING planner tool. Topics not related to hiking should be ignored (e.g. roadtrips). 
+            Also ignore posts about the US. The planner doesn't feature any US hikes at this time.
 
             ONLY output YES or NO, nothing else.
 
