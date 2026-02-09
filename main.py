@@ -10,14 +10,15 @@ from email_service import send_needs_response_email
 from llm_service import classify_answer_required_post, generate_response
 from subreddit_list import subreddits
 
-BASE = "https://www.reddit.com"
-UA = "trail-researcher/1.0 (by u/zezima1)" 
+BASE = "https://old.reddit.com"
+UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
 
 
 def _get_json(url: str, params: Dict[str, str], timeout: int = 15) -> dict:
     headers = {
         "User-Agent": UA,
-        "Accept": "application/json",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,application/json;q=0.8,*/*;q=0.7",
+        "Accept-Language": "en-US,en;q=0.9",
     }
     resp = requests.get(url, headers=headers, params=params, timeout=timeout)
 
